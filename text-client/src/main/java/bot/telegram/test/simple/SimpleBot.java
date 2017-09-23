@@ -3,6 +3,7 @@ package bot.telegram.test.simple;
 import ai.api.AIDataService;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -37,23 +38,24 @@ public class SimpleBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         if (message != null && message.hasText()) {
             if (raealProposal == null)
-            {
                 raealProposal = new RaealProposal(message.getChatId());
-            }
+
             try {
             AIRequest request = new AIRequest(message.getText());
             AIResponse response = dataService.request(request);
 
             if (response.getStatus().getCode() == 200) {
                 HashMap<String, JsonElement> param =  response.getResult().getParameters();
+                HashMap<Long, JsonElement>  proposals = null;
                 if (!param.isEmpty()){
-
+                    proposals = raealProposal.FindDiler(param);
                 }
-                for (Map.Entry<String, JsonElement> entry : param.entrySet())
+                for (Map.Entry<Long, JsonElement> entry : proposals.entrySet())
                 {
-                    String key = entry.getKey();
-                    JsonElement value = entry.getValue();
-                    System.out.println("key = "+ key +"; value = "+ value);
+                    Gson gson = new Gson();
+                    HashMap<String, Object> arr= gson.fromJson(entry.getValue(), HashMap.class);
+
+                    sendMsg(message, (String) arr.get("message"));
                 }
                 sendMsg(message, response.getResult().getFulfillment().getSpeech());
             } else {
