@@ -39,7 +39,7 @@ public class SimpleBot extends TelegramLongPollingBot {
     }
     private static ViewEnum STATE_VIEW = ViewEnum.VIEW_VERTICAL;
     private static SortEnum STATE_SORT = SortEnum.SORT_BY_DEFAULT;
-    private final static Booking BOOKING = new Booking();
+
     private final static Shop SHOP = new Shop(1, "OOO'Рога и Копыта'", "г.Краснодар. ул Красная 123", "myShop.ru");
     private RaealProposal raealProposal = null;
     private int currentStateAutomat = 1; // 0 - flowers; 1 - reviews
@@ -134,31 +134,33 @@ public class SimpleBot extends TelegramLongPollingBot {
 
                     }
                 }else if(message.getText().toLowerCase().equals("/menu")||message.getText().toLowerCase().equals("перейти в меню")){
-                    Menu(message, "/menu");
+//                    Menu(message, "/menu");
                 }else if(message.getText().toLowerCase().equals("заказать цветы")){
 
                 }else if(message.getText().toLowerCase().equals("мои заказы") ||  message.getText().equals("/myBooking")){
-                    sendMsg(message, "Для перехода в мои заказы воспользуйтесь командой /myBooking", null);
-                    for (BookingInforamtion bookingInforamtion :BOOKING.getBookingInforamtionList()){
-                        addMenuForText(message, bookingInforamtion.toString(), bookingInforamtion.getMenu());
-                    }
+//                    sendMsg(message, "Для перехода в мои заказы воспользуйтесь командой /myBooking", null);
+//                    for (BookingInformation bookingInforamtion :BOOKING.getBookingInformationList()){
+//                        addMenuForText(message, bookingInforamtion.toString(), bookingInforamtion.getMenu());
+//                    }
                 }else if(message.getText().toLowerCase().equals("закрыть меню")){
-                    sendMsg(message, "Для вызова меню воспользуйтесь командой /menu", null);
+//                    sendMsg(message, "Для вызова меню воспользуйтесь командой /menu", null);
                 }else if(message.getText().toLowerCase().equals("мои настройки") || message.getText().equals("/settings")){
-                    mySettings(message,  "/settings");
+//                    mySettings(message,  "/settings");
                 }else if(message.getText().toLowerCase().equals("выбрать сортировку запросов") || message.getText().equals("/selectSort")) {
-                    mySettingsSort(message, "текущая сортировка : " + STATE_SORT.getText());
+//                    mySettingsSort(message, "текущая сортировка : " + STATE_SORT.getText());
                 }else if(message.getText().toLowerCase().equals("вид отбражения результатов") || message.getText().equals("/selectView")){
-                    mySettingsView(message, "текущий вид : " + STATE_VIEW.getText());
+//                    mySettingsView(message, "текущий вид : " + STATE_VIEW.getText());
                 }else if(message.getText().toLowerCase().equals("отобразить все мои настройки") || message.getText().equals("/printSettings")){
-                    mySettingsView(message, printMySettings());
+//                    mySettingsView(message, printMySettings());
                 }if(message.getText().toLowerCase().equals("/start")){
-                    startButton(message, "Добрый день, этот бот вам поможет заказать лучшие цветы в Краснодаре! \n" +
-                            "Введите запрос или воспользуйтесь кнопкой меню");
+//                    startButton(message, "Добрый день, этот бот вам поможет заказать лучшие цветы в Краснодаре! \n" +
+//                            "Введите запрос или воспользуйтесь кнопкой меню");
                 }else
                     requestHandling(message);
             }
     }
+
+
 
     private void findViewMenuSettings(Message message, CallbackQuery callbackQuery){
 
@@ -373,144 +375,144 @@ public class SimpleBot extends TelegramLongPollingBot {
 
     }
 
-    private void startButton(Message message, String text){
+//    private void startButton(Message message, String text){
+//
+//        SendMessage sendMessage = new SendMessage();
+//        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//        rowInline.add(new InlineKeyboardButton("Меню")
+//                .setCallbackData("/menu"));
+//        rowsInline.add(rowInline);
+//        markupInline.setKeyboard(rowsInline);
+//        sendMessage.setChatId(message.getChatId().toString());
+//        sendMessage.setText(text);
+//        sendMessage.setReplyMarkup(markupInline);
+//        try {
+//            execute(sendMessage);
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-        SendMessage sendMessage = new SendMessage();
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton("Меню")
-                .setCallbackData("/menu"));
-        rowsInline.add(rowInline);
-        markupInline.setKeyboard(rowsInline);
-        sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
-        sendMessage.setReplyMarkup(markupInline);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
+//    private ReplyKeyboardRemove removeKeyBoard(){
+//        ReplyKeyboardRemove replyKeyboardMarkup = new ReplyKeyboardRemove();
+//        return replyKeyboardMarkup;
+//    }
+//
+//    private void Menu(Message message, String text){
+//
+//        SendMessage sendMessage = new SendMessage();
+//        sendMessage.enableMarkdown(true);
+//        sendMessage.enableHtml(true);
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        replyKeyboardMarkup.setSelective(true);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//        replyKeyboardMarkup.setOneTimeKeyboard(false);
+//
+//        List<KeyboardRow> keyboard = new ArrayList<>();
+//        KeyboardRow keyboardFirstRow = new KeyboardRow();
+//        keyboardFirstRow.add("Заказать цветы");
+//        keyboardFirstRow.add("Мои заказы");
+//        keyboard.add(keyboardFirstRow);
+//
+//        keyboardFirstRow = new KeyboardRow();
+//        keyboardFirstRow.add("Закрыть меню");
+//        keyboardFirstRow.add("Мои настройки");
+//        keyboard.add(keyboardFirstRow);
+//
+//        replyKeyboardMarkup.setKeyboard(keyboard);
+//        sendMessage.setChatId(message.getChatId().toString());
+//        sendMessage.setText(text);
+//        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+//        try {
+//            execute(sendMessage);
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    private ReplyKeyboardRemove removeKeyBoard(){
-        ReplyKeyboardRemove replyKeyboardMarkup = new ReplyKeyboardRemove();
-        return replyKeyboardMarkup;
-    }
+//    private void mySettings(Message message, String text){
+//        SendMessage sendMessage = new SendMessage();
+//        sendMessage.enableMarkdown(true);
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        replyKeyboardMarkup.setSelective(true);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//        replyKeyboardMarkup.setOneTimeKeyboard(false);
+//
+//        List<KeyboardRow> keyboard = new ArrayList<>();
+//        KeyboardRow keyboardFirstRow = new KeyboardRow();
+//        keyboardFirstRow.add("Выбрать сортировку запросов");
+//        keyboardFirstRow.add("Вид отбражения результатов");
+//        keyboard.add(keyboardFirstRow);
+//        keyboardFirstRow = new KeyboardRow();
+//        keyboardFirstRow.add("Перейти в меню");
+//        keyboardFirstRow.add("Отобразить все мои настройки");
+//        keyboard.add(keyboardFirstRow);
+//        replyKeyboardMarkup.setKeyboard(keyboard);
+//        sendMessage.setChatId(message.getChatId().toString());
+//        sendMessage.setText(text);
+//        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+//        try {
+//            execute(sendMessage);
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    private void Menu(Message message, String text){
+//    private void mySettingsView(Message message, String text){
+//        SendMessage sendMessage = new SendMessage();
+//        sendMessage.enableMarkdown(true);
+//        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//        rowInline.add(new InlineKeyboardButton(ViewEnum.VIEW_HORIZONTAL.getText())
+//                .setCallbackData(ViewEnum.VIEW_HORIZONTAL.getCommand()));
+//        rowInline.add(new InlineKeyboardButton(ViewEnum.VIEW_VERTICAL.getText())
+//                .setCallbackData(ViewEnum.VIEW_VERTICAL.getCommand()));
+//        rowsInline.add(rowInline);
+//                markupInline.setKeyboard(rowsInline);
+//        sendMessage.setChatId(message.getChatId().toString());
+//        sendMessage.setText(text);
+//        sendMessage.setReplyMarkup(markupInline);
+//        try {
+//            execute(sendMessage);
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        sendMessage.enableHtml(true);
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Заказать цветы");
-        keyboardFirstRow.add("Мои заказы");
-        keyboard.add(keyboardFirstRow);
-
-        keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Закрыть меню");
-        keyboardFirstRow.add("Мои настройки");
-        keyboard.add(keyboardFirstRow);
-
-        replyKeyboardMarkup.setKeyboard(keyboard);
-        sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mySettings(Message message, String text){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-
-        List<KeyboardRow> keyboard = new ArrayList<>();
-        KeyboardRow keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Выбрать сортировку запросов");
-        keyboardFirstRow.add("Вид отбражения результатов");
-        keyboard.add(keyboardFirstRow);
-        keyboardFirstRow = new KeyboardRow();
-        keyboardFirstRow.add("Перейти в меню");
-        keyboardFirstRow.add("Отобразить все мои настройки");
-        keyboard.add(keyboardFirstRow);
-        replyKeyboardMarkup.setKeyboard(keyboard);
-        sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mySettingsView(Message message, String text){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton(ViewEnum.VIEW_HORIZONTAL.getText())
-                .setCallbackData(ViewEnum.VIEW_HORIZONTAL.getCommand()));
-        rowInline.add(new InlineKeyboardButton(ViewEnum.VIEW_VERTICAL.getText())
-                .setCallbackData(ViewEnum.VIEW_VERTICAL.getCommand()));
-        rowsInline.add(rowInline);
-                markupInline.setKeyboard(rowsInline);
-        sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
-        sendMessage.setReplyMarkup(markupInline);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mySettingsSort(Message message, String text){
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.enableMarkdown(true);
-        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-        List<InlineKeyboardButton> rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_DISTANCE.getText())
-                .setCallbackData(SortEnum.SORT_BY_DISTANCE.getCommand()));
-        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_POPULARITY.getText())
-                .setCallbackData(SortEnum.SORT_BY_POPULARITY.getCommand()));
-        rowsInline.add(rowInline);
-        rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_RATING.getText())
-                .setCallbackData(SortEnum.SORT_BY_RATING.getCommand()));
-        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_DEFAULT.getText())
-                .setCallbackData(SortEnum.SORT_BY_DEFAULT.getCommand()));
-        rowsInline.add(rowInline);
-        rowInline = new ArrayList<>();
-        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_PRICE.getText())
-                .setCallbackData(SortEnum.SORT_BY_PRICE.getCommand()));
-        rowsInline.add(rowInline);
-        markupInline.setKeyboard(rowsInline);
-        sendMessage.setChatId(message.getChatId().toString());
-        sendMessage.setText(text);
-        sendMessage.setReplyMarkup(markupInline);
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void mySettingsSort(Message message, String text){
+//        SendMessage sendMessage = new SendMessage();
+//        sendMessage.enableMarkdown(true);
+//        InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
+//        List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
+//        List<InlineKeyboardButton> rowInline = new ArrayList<>();
+//        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_DISTANCE.getText())
+//                .setCallbackData(SortEnum.SORT_BY_DISTANCE.getCommand()));
+//        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_POPULARITY.getText())
+//                .setCallbackData(SortEnum.SORT_BY_POPULARITY.getCommand()));
+//        rowsInline.add(rowInline);
+//        rowInline = new ArrayList<>();
+//        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_RATING.getText())
+//                .setCallbackData(SortEnum.SORT_BY_RATING.getCommand()));
+//        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_DEFAULT.getText())
+//                .setCallbackData(SortEnum.SORT_BY_DEFAULT.getCommand()));
+//        rowsInline.add(rowInline);
+//        rowInline = new ArrayList<>();
+//        rowInline.add(new InlineKeyboardButton(SortEnum.SORT_BY_PRICE.getText())
+//                .setCallbackData(SortEnum.SORT_BY_PRICE.getCommand()));
+//        rowsInline.add(rowInline);
+//        markupInline.setKeyboard(rowsInline);
+//        sendMessage.setChatId(message.getChatId().toString());
+//        sendMessage.setText(text);
+//        sendMessage.setReplyMarkup(markupInline);
+//        try {
+//            execute(sendMessage);
+//        } catch (TelegramApiException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     private InlineKeyboardMarkup menuTrade(Integer tradeId){
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();

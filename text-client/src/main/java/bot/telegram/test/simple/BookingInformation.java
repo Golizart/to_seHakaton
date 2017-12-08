@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by golizar on 23.11.17.
  */
-public class BookingInforamtion implements Comparator,Comparable {
+public class BookingInformation implements Comparator,Comparable {
     private final String mBookingNumber;
     private final String mShopName;
     private final Integer mShopId;
@@ -19,7 +19,7 @@ public class BookingInforamtion implements Comparator,Comparable {
     private Instant mDateTo = null;
     private BookingStateEnum mBookingState;
 
-    public BookingInforamtion(String mBookingNumber, BookingStateEnum mBookingState, Instant dateFrom) {
+    public BookingInformation(String mBookingNumber, BookingStateEnum mBookingState, Instant dateFrom) {
         this.mBookingNumber = mBookingNumber;
         this.mBookingState = mBookingState;
         this.mShopId = 1;
@@ -27,7 +27,7 @@ public class BookingInforamtion implements Comparator,Comparable {
         this.mDateFrom = dateFrom;
     }
 
-    public BookingInforamtion(String mBookingNumber, BookingStateEnum mBookingState, Instant dateFrom, Instant dateTo) {
+    public BookingInformation(String mBookingNumber, BookingStateEnum mBookingState, Instant dateFrom, Instant dateTo) {
         this.mBookingNumber = mBookingNumber;
         this.mBookingState = mBookingState;
         this.mShopId = 1;
@@ -85,14 +85,14 @@ public class BookingInforamtion implements Comparator,Comparable {
     }
 
     public int compare(Object obj1, Object obj2) {
-        Instant p1 = ((BookingInforamtion) obj1).getDateFrom();
-        Instant p2 = ((BookingInforamtion) obj2).getDateFrom();
+        Instant p1 = ((BookingInformation) obj1).getDateFrom();
+        Instant p2 = ((BookingInformation) obj2).getDateFrom();
         return p1.compareTo(p2);
     }
 
     @Override
     public int compareTo(Object obj1) {
-        Instant p1 = ((BookingInforamtion) obj1).getDateFrom();
+        Instant p1 = ((BookingInformation) obj1).getDateFrom();
         return this.getDateFrom().compareTo(p1);
     }
 }
