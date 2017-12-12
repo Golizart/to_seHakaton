@@ -1,4 +1,4 @@
-package bot.Commands;
+package bot.Commands.BotCommand;
 
 import bot.Entity.Entity;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -10,9 +10,16 @@ import java.util.List;
 
 
 public class MenuCommand implements Command {
+    private static MenuCommand menuCommand;
+    public static MenuCommand getInstance(){
+        if(menuCommand == null)
+            menuCommand = new MenuCommand();
+        return menuCommand;
+    }
+
 
     @Override
-    public void execute(Entity entity, String text) {
+    public void execute(Entity entity) {
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
@@ -31,13 +38,13 @@ public class MenuCommand implements Command {
         keyboard.add(keyboardFirstRow);
 
         replyKeyboardMarkup.setKeyboard(keyboard);
-        sendMessage.setText(text);
+        sendMessage.setText(getCommandType().getCommand());
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         entity.getMessages().execute(sendMessage);
     }
 
     @Override
-    public String getCommandName() {
-        return "menu";
+    public CommandTypes getCommandType() {
+        return CommandTypes.MENU;
     }
 }

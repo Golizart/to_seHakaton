@@ -1,4 +1,4 @@
-package bot.Commands;
+package bot.Commands.BotCommand;
 
 import bot.Entity.Entity;
 import bot.telegram.test.simple.Booking;
@@ -12,18 +12,27 @@ import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
  */
 public class MyBookingCommand implements Command {
 
+
+    private  static CallCommand callCommand;
+
+    public static CallCommand getInstance(){
+        if(callCommand == null)
+            callCommand = new CallCommand();
+        return callCommand;
+    }
+
     private final static Booking BOOKING = new Booking();
 
     @Override
-    public void execute(Entity entity, String text) {
+    public void execute(Entity entity) {
         for (BookingInformation bookingInformation : BOOKING.getBookingInformationList()){
             addMenuForText(entity, bookingInformation.toString(), bookingInformation.getMenu());
         }
     }
 
     @Override
-    public String getCommandName() {
-        return "/mybooking";
+    public CommandTypes getCommandType() {
+        return CommandTypes.MY_BOOKINGS;
     }
 
     private void addMenuForText(Entity entity, String text, ReplyKeyboard replyKeyboard) {

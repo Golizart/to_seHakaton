@@ -50,17 +50,9 @@ public class TextClientApplication {
    *        Second and the following args should be file names containing audio data.
    */
   public static void main(String[] args) {
-//    if (args.length < 1) {
-//      showHelp("Please specify API key", ERROR_EXIT_CODE);
-//    }
-
-    ApiContextInitializer.init();
     TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-    AIConfiguration configuration = new AIConfiguration("81c46bba0ec34d80a17c2b265ea7ccc8");
-    AIDataService dataService = new AIDataService(configuration);
-
     try {
-      telegramBotsApi.registerBot(new SimpleBot(dataService));
+      telegramBotsApi.registerBot(new SimpleBot());
     } catch (TelegramApiException e) {
       e.printStackTrace();
     }

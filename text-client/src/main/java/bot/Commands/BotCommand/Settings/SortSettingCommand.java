@@ -1,16 +1,12 @@
-package bot.Commands.Settings;
+package bot.Commands.BotCommand.Settings;
 
-import bot.Commands.Command;
+import bot.Commands.BotCommand.Command;
+import bot.Commands.BotCommand.CommandTypes;
 import bot.Entity.Entity;
 import bot.telegram.test.simple.SortEnum;
-import bot.telegram.test.simple.ViewEnum;
-import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.bots.AbsSender;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +16,25 @@ import java.util.List;
  */
 public class SortSettingCommand implements Command {
 
-    @Override
-    public void execute(Entity entity, String text) {
-        sortSettings(entity, text);
+    private  static SortSettingCommand sortSettingsCommand;
+
+    public static SortSettingCommand getInstance(){
+        if(sortSettingsCommand == null)
+            sortSettingsCommand = new SortSettingCommand();
+        return sortSettingsCommand;
     }
 
     @Override
-    public String getCommandName() {
-        return "/sortSettings";
+    public void execute(Entity entity) {
+        sortSettings(entity);
     }
 
-    private void sortSettings(Entity entity, String text){
+    @Override
+    public CommandTypes getCommandType() {
+        return CommandTypes.SORT_SETTINGS;
+    }
+
+    private void sortSettings(Entity entity){
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
@@ -52,7 +56,7 @@ public class SortSettingCommand implements Command {
                 .setCallbackData(SortEnum.SORT_BY_PRICE.getCommand()));
         rowsInline.add(rowInline);
         markupInline.setKeyboard(rowsInline);
-        sendMessage.setText(text);
+        sendMessage.setText(getCommandType().getCommand());
         sendMessage.setReplyMarkup(markupInline);
         entity.getMessages().execute(sendMessage);
     }

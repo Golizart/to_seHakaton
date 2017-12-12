@@ -1,6 +1,6 @@
 package bot.Entity;
 
-import bot.Commands.Command;
+import bot.Commands.BotCommand.Command;
 import bot.botInterface.Messages;
 
 /**
@@ -8,15 +8,15 @@ import bot.botInterface.Messages;
  */
 public class Entity {
     private String name;
-    private int phone;
+    private String phone;
     private SettingsView settingsView;
     private Messages messages;
     private Command pastState;
     private Command nextState;
 
-    public Entity(String name, int phone, SettingsView settings, Messages messages, Command paststate, Command nextstate) {
-        this.name = name;
-        this.phone = phone;
+    public Entity(SettingsView settings, Messages messages, Command paststate, Command nextstate) {
+        this.name = messages.getUserName();
+        this.phone = messages.getUserPhoneNumber();
         this.settingsView = settings;
         this.messages = messages;
         this.pastState = paststate;
@@ -27,7 +27,7 @@ public class Entity {
         return name;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 

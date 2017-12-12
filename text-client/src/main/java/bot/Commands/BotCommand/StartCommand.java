@@ -1,12 +1,9 @@
-package bot.Commands;
+package bot.Commands.BotCommand;
 
 import bot.Entity.Entity;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.bots.AbsSender;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +12,16 @@ import java.util.List;
  * Created by golizar on 07.12.17.
  */
 public class StartCommand implements Command{
+    private  static StartCommand startCommand;
+
+    public static StartCommand getInstance(){
+        if(startCommand == null)
+            startCommand = new StartCommand();
+        return startCommand;
+    }
 
     @Override
-    public void execute(Entity entity, String text) {
+    public void execute(Entity entity) {
         SendMessage sendMessage = new SendMessage();
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -26,14 +30,15 @@ public class StartCommand implements Command{
                 .setCallbackData("/menu"));
         rowsInline.add(rowInline);
         markupInline.setKeyboard(rowsInline);
-        sendMessage.setText(text);
+        sendMessage.setText("Добрый день, этот бот вам поможет заказать лучшие цветы в Краснодаре! \n" +
+                            "Введите запрос или воспользуйтесь кнопкой меню");
         sendMessage.setReplyMarkup(markupInline);
         entity.getMessages().execute(sendMessage);
 
     }
 
     @Override
-    public String getCommandName() {
-        return "/start";
+    public CommandTypes getCommandType() {
+        return CommandTypes.START;
     }
 }

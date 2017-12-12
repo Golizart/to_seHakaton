@@ -1,14 +1,12 @@
-package bot.Commands.Settings;
+package bot.Commands.BotCommand.Settings;
 
-import bot.Commands.Command;
+import bot.Commands.BotCommand.Command;
+import bot.Commands.BotCommand.CommandTypes;
 import bot.Entity.Entity;
 import bot.telegram.test.simple.ViewEnum;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.bots.AbsSender;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,17 +16,25 @@ import java.util.List;
  */
 public class ViewSettingCommand implements Command {
 
-    @Override
-    public void execute(Entity entity, String text) {
-        viewSettings(entity, text);
+    private  static ViewSettingCommand viewSettingsCommand;
+
+    public static ViewSettingCommand getInstance(){
+        if(viewSettingsCommand == null)
+            viewSettingsCommand = new ViewSettingCommand();
+        return viewSettingsCommand;
     }
 
     @Override
-    public String getCommandName() {
-        return "/viewSettings";
+    public void execute(Entity entity) {
+        viewSettings(entity);
     }
 
-    public void viewSettings(Entity entity, String text) {
+    @Override
+    public CommandTypes getCommandType() {
+        return CommandTypes.VIEW_SETTINGS;
+    }
+
+    public void viewSettings(Entity entity) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
@@ -40,7 +46,7 @@ public class ViewSettingCommand implements Command {
                 .setCallbackData(ViewEnum.VIEW_VERTICAL.getCommand()));
         rowsInline.add(rowInline);
         markupInline.setKeyboard(rowsInline);
-        sendMessage.setText(text);
+        sendMessage.setText(getCommandType().getCommand());
         sendMessage.setReplyMarkup(markupInline);
         entity.getMessages().execute(sendMessage);
     }

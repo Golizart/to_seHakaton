@@ -1,17 +1,9 @@
-package bot.Commands;
+package bot.Commands.BotCommand;
 
 import bot.Entity.Entity;
-import bot.telegram.test.simple.SortEnum;
-import bot.telegram.test.simple.ViewEnum;
-import org.telegram.telegrambots.api.methods.ParseMode;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
-import org.telegram.telegrambots.api.objects.Message;
-import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.bots.AbsSender;
-import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,18 +13,26 @@ import java.util.List;
  */
 public class SettingCommand implements Command {
 
-    @Override
-    public void execute(Entity entity, String text) {
-        menu(entity, text);
+    private  static SettingCommand settingsCommand;
+
+    public static SettingCommand getInstance(){
+        if(settingsCommand == null)
+            settingsCommand = new SettingCommand();
+        return settingsCommand;
     }
 
     @Override
-    public String getCommandName() {
-        return "/settings";
+    public void execute(Entity entity) {
+        menu(entity);
+    }
+
+    @Override
+    public CommandTypes getCommandType() {
+        return CommandTypes.SETTINGS;
     }
 
 
-    private void menu(Entity entity, String text){
+    private void menu(Entity entity){
         SendMessage sendMessage = new SendMessage();
         sendMessage.enableMarkdown(true);
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -49,7 +49,7 @@ public class SettingCommand implements Command {
         keyboardFirstRow.add("\u2B05 Назад");
         keyboard.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(keyboard);
-        sendMessage.setText(text);
+        sendMessage.setText(CommandTypes.SETTINGS.getCommand());
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         entity.getMessages().execute(sendMessage);
     }

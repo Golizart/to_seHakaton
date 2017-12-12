@@ -16,7 +16,7 @@ import java.util.Properties;
 /**
  * Created by akurus on 23.09.17.
  */
-public class RaealProposal {
+public class RealProposal {
     private long chatId;
     private HashMap<Long, JsonElement> diler = new HashMap<Long, JsonElement> ();
     JsonElement dilerSay;
@@ -32,7 +32,7 @@ public class RaealProposal {
     private static String resourceDir;
     final Properties clientProperties = new Properties();
 
-    public RaealProposal(long chatId) {
+    public RealProposal(long chatId) {
         this.chatId = chatId;
         JsonParser jsonParser = new JsonParser();
         resourceDir = System.getProperty("user.dir") + File.separator + "resources";
